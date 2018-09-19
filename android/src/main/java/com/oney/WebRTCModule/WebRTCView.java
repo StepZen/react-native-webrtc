@@ -535,7 +535,9 @@ public class WebRTCView extends ViewGroup {
                 if (videoTrack == null) {
                     // If we are not going to render any stream, clean the
                     // surface.
-                    cleanSurfaceViewRenderer();
+
+                    // don't clean surface - 2018.09.19
+                    // cleanSurfaceViewRenderer();
                 }
                 removeRendererFromVideoTrack();
             }
@@ -547,7 +549,9 @@ public class WebRTCView extends ViewGroup {
                 if (oldVideoTrack == null) {
                     // If there was no old track, clean the surface so we start
                     // with black.
-                    cleanSurfaceViewRenderer();
+
+                    // don't clean surface - 2018.09.19
+                    //cleanSurfaceViewRenderer();
                 }
             }
         }
