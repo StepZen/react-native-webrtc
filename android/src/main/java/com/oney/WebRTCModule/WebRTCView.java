@@ -165,10 +165,13 @@ public class WebRTCView extends ViewGroup {
      */
     private VideoTrack videoTrack;
 
+    private boolean firstRender = true;
+
     public WebRTCView(Context context) {
         super(context);
 
         surfaceViewRenderer = new SurfaceViewRenderer(context);
+        cleanSurfaceViewRenderer();
         addView(surfaceViewRenderer);
 
         setMirror(false);
@@ -531,13 +534,18 @@ public class WebRTCView extends ViewGroup {
         VideoTrack oldVideoTrack = this.videoTrack;
 
         if (oldVideoTrack != videoTrack) {
+
+            final boolean isFirstRender = this.firstRender;
+
             if (oldVideoTrack != null) {
                 if (videoTrack == null) {
                     // If we are not going to render any stream, clean the
                     // surface.
 
-                    // don't clean surface - 2018.09.19
-                    // cleanSurfaceViewRenderer();
+                    // don't clean surface if not first render - 2018.09.19
+                    if(isFirstRender) {
+                        cleanSurfaceViewRenderer();
+                    }
                 }
                 removeRendererFromVideoTrack();
             }
@@ -550,10 +558,16 @@ public class WebRTCView extends ViewGroup {
                     // If there was no old track, clean the surface so we start
                     // with black.
 
-                    // don't clean surface - 2018.09.19
-                    //cleanSurfaceViewRenderer();
+                    // don't clean surface if not first render - 2018.09.19
+                    if(isFirstRender) {
+                        cleanSurfaceViewRenderer();
+                    }
                 }
+
+                this.firstRender = false;
             }
+
+
         }
     }
 
