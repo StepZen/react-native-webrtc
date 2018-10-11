@@ -54,7 +54,8 @@ public class VideoTrackAdapter {
         String trackId = videoTrack.id();
         TrackMuteUnmuteImpl onMuteImpl = muteImplMap.remove(trackId);
         if (onMuteImpl != null) {
-            videoTrack.removeSink(onMuteImpl);
+            // don't need remove sink ,it will be done in dispose method. --- StepZen 20181011
+            // videoTrack.removeSink(onMuteImpl);
             onMuteImpl.dispose();
             Log.d(TAG, "Deleted adapter for " + trackId);
         } else {
